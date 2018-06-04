@@ -22,7 +22,7 @@ const devServer = {
   inline             : !manifest.IS_PRODUCTION,
   watchContentBase: true,
   hot                : !manifest.IS_PRODUCTION,
-  host               : '0.0.0.0',
+  host               : 'localhost',
   disableHostCheck   : true, // [1]
   overlay            : true,
   stats: {

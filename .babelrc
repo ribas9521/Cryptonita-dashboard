@@ -3,7 +3,7 @@
     "transform-class-properties",
     "transform-object-rest-spread"
   ],
-  "presets": [
+  "presets": ["react",
     ["env", {
       "modules": false
     }],

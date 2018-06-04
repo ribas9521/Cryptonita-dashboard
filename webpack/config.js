@@ -28,7 +28,7 @@ const
 
 const
   entry = [
-    path.join(manifest.paths.src, 'assets', 'scripts', manifest.entries.js),
+    path.join(manifest.paths.src, manifest.entries.js),
   ];
 
 
@@ -37,11 +37,11 @@ const
 // ---------------
 
 const resolve = {
-  extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js'],
-  modules: [
-    path.join(__dirname, '../node_modules'),
-    path.join(manifest.paths.src, ''),
-  ],
+  extensions: ['.js', '.jsx', '.webpack-loader.js', '.web-loader.js', '.loader.js' ]
+
+
+  // extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', 'jsx','.js' ]
+  
 };
 
 
