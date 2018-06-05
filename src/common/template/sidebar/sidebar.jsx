@@ -1,4 +1,5 @@
 import React from 'react'
+import Menu from './menu/menu'
 import './index'
 
 export default props=>(
@@ -14,8 +15,8 @@ export default props=>(
                         <img src="assets/static/images/logo.png" alt=""/>
                       </div>
                     </div>
-                    <div className="peer peer-greed">
-                      <h5 className="lh-1 mB-0 logo-text">Adminator</h5>
+                    <div className="peer peer-greed">                      
+                        <img className="lh-1 mB-0 logo-text" src="assets/static/images/logo-name.png" alt="" />                      
                     </div>
                   </div>
                 </a>
@@ -29,6 +30,7 @@ export default props=>(
               </div>
             </div>
             </div>
+            <Menu/>
         </div>
     </div>
 )

@@ -1,4 +1,5 @@
 import '../styles/index.scss';
+import '../styles/master.scss';
 
 import './masonry';
 import './charts';

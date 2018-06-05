@@ -5,7 +5,7 @@
   "description": "HTML Admin Template",
   "scripts": {
     "start": "webpack-dev-server",
-     "dev": "webpack-dev-server --hot --open",
+    "dev": "webpack-dev-server --hot --open",
     "clean": "shx rm -rf ./build",
     "build": "npm run clean && cross-env NODE_ENV=\"production\" webpack",
     "preview": "cross-env NODE_ENV=\"production\" webpack-dev-server",
@@ -42,6 +42,7 @@
     "react-redux": "^5.0.7",
     "react-redux-toastr": "^7.2.6",
     "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
     "redux-multi": "^0.1.12",
     "redux-promise": "^0.6.0",
