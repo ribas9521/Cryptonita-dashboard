@@ -3,7 +3,7 @@ const INITIAL_STATE = { marketInfo: { name:"Bitcoin", symbol:"btc", percentChang
 export default function(state = INITIAL_STATE , action){
     switch(action.type){
         case 'MARKET_INFO_FETCHED':          
-            return {...state, marketInfo: action.payload.data}
+            return {...state, marketInfo: action.payload}
         default:
             return state
     }

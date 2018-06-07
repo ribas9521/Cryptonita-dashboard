@@ -4,21 +4,31 @@ import { bindActionCreators } from 'redux'
 
 import { getMarketInfo } from '../marketInfoActions'
 
+import MarketChangesCard from './MarketChangesCard'
+
 class MarketChanges extends Component{
+    constructor(props){
+        super(props)
+    }
     
     componentWillMount(){
-       this.props.getMarketInfo()
-    }
-    render(){
-        //const { name, symbol, percentChange1h, percentChange24h, percentChange7d} = this.props.marketInfo
-        console.log(this.props.marketInfo);
-        return(
-            // <div>
-            //     <h1>{name}</h1>
-            //     <h1>{symbol}</h1>
-            //     <h1>{percentChange1h}</h1>
-            // </div>
-            <h1>tteste</h1>
+        this.props.getMarketInfo()
+                
+    }    
+
+    render(){       
+        return(            
+            <div className="row gap-20">
+                <div className ="col-md-4">
+                    <MarketChangesCard title ="1H Changes" data = {this.props.marketInfo.data}/>
+                </div>
+                <div className ="col-md-4">
+                    <MarketChangesCard title ="24H Changes"/>
+                </div>
+                <div className ="col-md-4">
+                    <MarketChangesCard title ="7D Changes"/>
+                </div>
+            </div>           
         )
     }    
 }
