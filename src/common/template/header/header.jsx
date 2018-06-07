@@ -1,5 +1,8 @@
 import React from 'react'
 
+import SearchBox from './search/searchBox'
+import SearchInput from './search/searchInput'
+
 
 export default class Header extends React.Component{
 
@@ -9,6 +12,11 @@ export default class Header extends React.Component{
     componentDidMount(){
         $('.sidebar-toggle').on('click', e => {
             $('.app').toggleClass('is-collapsed');
+            e.preventDefault();
+        });
+        $('.search-toggle').on('click', e => {
+            $('.search-box, .search-input').toggleClass('active');
+            $('.search-input input').focus();
             e.preventDefault();
         });
     }
@@ -23,6 +31,8 @@ export default class Header extends React.Component{
                                 <i className="ti-menu"></i>
                             </a>
                         </li>
+                        <SearchBox/>
+                        <SearchInput/>
                     </ul>
                 </div>
             </div>

@@ -6,6 +6,5 @@ export default function(state = INITIAL_STATE , action){
             return {...state, marketInfo: action.payload.data}
         default:
             return state
-
     }
 }   
