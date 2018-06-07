@@ -2,9 +2,7 @@ import React from 'react'
 import '../assets/styles/index.scss'
 import '../assets/styles/master.scss'
 
-import {
-  HashRouter
-} from 'react-router-dom'
+import {  HashRouter } from 'react-router-dom'
 
 import Sidebar from '../common/template/sidebar/sidebar'
 import Header from '../common/template/header/header'
@@ -20,8 +18,6 @@ export default props=>(
                 <Routes/>
                 <Footer color = "grey-600" / >
             </div>
-        </div>
-   
+        </div>   
     </HashRouter >
-
 )
