@@ -5,7 +5,7 @@ import { getMarketInfo } from '../marketInfoActions'
 
 
 import Chart from 'chart.js'
-import 'chartjs-plugin-datalabels'
+
 class MarketChangesCard extends Component{
     constructor(props){
         super(props)
@@ -16,12 +16,23 @@ class MarketChangesCard extends Component{
         
         let data =[]
         let bgColor=[]
+        let max =0
+        let min =0
         if(this.props.type === "1h")
             data = variation.percentChange1h
         else if(this.props.type ==="24h")
             data = variation.percentChange24h
         else if(this.props.type === "7d")
             data = variation.percentChange7d
+
+        max = data.reduce((a, b)=> {
+            return Math.max(a, b);
+        });
+        min = data.reduce((a, b) => {
+            return Math.min(a, b);
+        });
+        console.log(max)
+        console.log(min)
         let ctx = this.canvas
         Chart.defaults.global.legend.display = false;
         let myChart = new Chart(ctx, {
@@ -35,10 +46,41 @@ class MarketChangesCard extends Component{
                     backgroundColor: bgColor 
                 }]
             },
-            datalabels: {
-                align: 'end',
-                anchor: 'start'
-            }
+            options : {
+                events: true,
+                easing: 'easeInBounce',                
+                animation: {
+                    duration: 1000,
+                    onComplete: function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily)
+                        ctx.textAlign = 'center'
+                        ctx.textBaseline = 'bottom'
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i)
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index]
+                                let offsetX = 0;
+                                if(data >0 ){
+                                    if(data <= max * 0.40){
+                                        offsetX += 20
+                                    }else                                    
+                                    offsetX -= 25
+                                }
+                                else{
+                                    if(data >= min*0.60){
+                                        offsetX -=55
+                                    }
+                                    offsetX +=30                                
+                                }
+                                ctx.fillText(data + "%", bar._model.x + offsetX, bar._model.y + 10)
+                            });
+                        });
+                    }
+                }
+            }          
         });
         for (let i = 0; i < myChart.data.datasets[0].data.length; i++) {
             let val = myChart.data.datasets[0].data[i]
@@ -70,15 +112,10 @@ class MarketChangesCard extends Component{
             }
             else if(val > 50){
                 bgColor.push("#00ff00");
-            }
-            
+            }            
         }
-        console.log(myChart.data.datasets[0])
-        // myChart.data.datasets.forEach(function (dataset) {
-        //     dataset.points.forEach(function (points) {
-        //         ctx.fillText(points.value, points.x, points.y - 10);
-        //     });
-        // })
+        
+        
         myChart.update()
 
         
