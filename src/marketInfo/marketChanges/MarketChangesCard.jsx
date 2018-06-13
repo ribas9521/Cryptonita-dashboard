@@ -34,7 +34,7 @@ class MarketChangesCard extends Component{
            
            this.chart = <ReactEcharts
                option={this.getOption()}
-               style={{ height: '350px', width: '100%' }}
+               style={{ height: '450px', width: '100%' }}
                className='react_for_echarts'
            />   
        }
@@ -50,6 +50,44 @@ class MarketChangesCard extends Component{
             data = this.props.variation.percentChange24h
         if(this.props.type==='7d')
             data = this.props.variation.percentChange7d
+
+       //data = [1, 2, 3, -4, 5, 6, -7, 8, 9, 10]
+    
+
+       let chartData = data.map((value)=>{
+            let newObj ={
+                value : 0,
+                itemStyle :{
+                    color: ''                
+                }
+            }
+            newObj['value'] = value
+            newObj['itemStyle'].color = value <= 0 ? '#c23531' : '#31c235'
+           
+           return newObj
+       })
+
+    //    rich: {
+    //        bitcoin: {
+    //            height: 20,
+    //                align: 'center',
+    //                    backgroundColor: {
+    //                image: '../../assets/static/images/crypto-icons/btc.png'
+
+    //            }
+    //        }
+    //    }
+       let rich ={}
+       this.props.variation.symbols.map((symbol) => {
+           rich[symbol] = {
+               height: 25,
+               align: 'center',
+               backgroundColor: {
+                   image: '../../assets/static/images/crypto-icons/' + symbol + '.png'
+               }
+           }
+       })
+     
 
        let opt = {
            title: {
@@ -69,19 +107,40 @@ class MarketChangesCard extends Component{
            },
            xAxis: {
                type: 'value',
-               position: 'top',
-               splitLine: { lineStyle: { type: 'dashed' } },
+               position: 'bottom',
+               splitLine: {show: false},
+               axisTick: { show: false },
+               axisLine:{
+                   lineStyle: {
+                       color: '#ccc'
+                   }
+               }
+
+              
+               //splitLine: { lineStyle: { type: 'dashed' } },
+             
            },
            yAxis: {
-               type: 'category',
-               axisLine: { show: false },
-               axisLabel: { show: true },
                axisTick: { show: false },
-               splitLine: { show: false },
-               data: this.props.variation.labels,
-               rich: {
 
-               }
+               type: 'category',     
+               data: this.props.variation.symbols,
+               inverse: true,
+        
+               axisLabel: {                   
+                    formatter: function (value) {                       
+                        return '{' + value + '| }'
+                    },                   
+                    rich:rich
+                },
+               axisLine: {
+                   lineStyle: {
+                       color: '#ccc'
+                   }
+               },
+               splitLine: {show:true, lineStyle: { type: 'dashed' } }
+               
+               
            },
            series: [
                {
@@ -93,13 +152,12 @@ class MarketChangesCard extends Component{
                            formatter: '{c}%'                        
                        }
                    },
-                   data: data
+                   data: chartData                 
 
                }
            ]
        }
-       console.log(opt)
-       
+       //console.log(opt)
        return (opt)
    }
     render(){  

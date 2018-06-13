@@ -32,12 +32,14 @@ export function setVariationData(period){
         let data = getState().market.marketInfo
         let variation = {
             labels: [],
+            symbols:[],
             percentChange1h: [],
             percentChange24h: [],
             percentChange7d: []
         }     
         data.map((value, i)=>{
             variation.labels.push(value.name)
+            variation.symbols.push((value.symbol).toLowerCase())
             variation.percentChange1h.push(value.quotes.USD.percent_change_1h)
             variation.percentChange24h.push(value.quotes.USD.percent_change_24h)
             variation.percentChange7d.push(value.quotes.USD.percent_change_7d)

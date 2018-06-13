@@ -12,7 +12,7 @@ class MarketChanges extends Component{
     }
     
     componentWillMount(){              
-        //this.props.getMarketInfo()  
+       
     }    
     
     render(){
