@@ -1,21 +1,30 @@
 import axios from 'axios'
 const BASE_URL = 'https://api.coinmarketcap.com/v2/ticker/'
 
-
-export function getMarketInfo(){   
+let timer = null
+export function getMarketInfo(){
     return dispatch=>{        
-        const request = axios.get(`${BASE_URL}?limit=10`)
-        .then(resp=>(dispatch({type : 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data) })))
-        .then(resp=>(dispatch(setVariationData())))
-        
+        clearInterval(timer)
+        timer = setInterval(()=>dispatch(getMarketData()), 30000)
+        dispatch(getMarketData())
     }
-    function toArray(obj){
-        let data =[]
-        for(var key in obj){
+  
+}
+
+export function getMarketData(){   
+    return dispatch => {
+        const request = axios.get(`${BASE_URL}?limit=10`)
+            .then(resp => (dispatch({ type: 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data) })))
+            .then(resp => (dispatch(setVariationData())))
+
+    }
+    function toArray(obj) {
+        let data = []
+        for (var key in obj) {
             data.push(obj[key])
         }
         return data
-    }   
+    } 
 }
 
 export function setVariationData(period){

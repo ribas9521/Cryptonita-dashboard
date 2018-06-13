@@ -4,141 +4,113 @@ import { bindActionCreators } from 'redux'
 import { getMarketInfo } from '../marketInfoActions'
 
 
-import Chart from 'chart.js'
+import ReactEcharts from 'echarts-for-react'
+import Loading from '../../common/template/loading/loading'
 
 class MarketChangesCard extends Component{
     constructor(props){
         super(props)
-        this.buildChart = this.buildChart.bind(this)        
-    }
-
-    buildChart(variation){
-        
-        let data =[]
-        let bgColor=[]
-        let max =0
-        let min =0
-        if(this.props.type === "1h")
-            data = variation.percentChange1h
-        else if(this.props.type ==="24h")
-            data = variation.percentChange24h
-        else if(this.props.type === "7d")
-            data = variation.percentChange7d
-
-        max = data.reduce((a, b)=> {
-            return Math.max(a, b);
-        });
-        min = data.reduce((a, b) => {
-            return Math.min(a, b);
-        });
-        console.log(max)
-        console.log(min)
-        let ctx = this.canvas
-        Chart.defaults.global.legend.display = false;
-        let myChart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: variation.labels,
-                datasets: [{
-                    label: false,                
-                    data: data,               
-                    borderWidth: 1,
-                    backgroundColor: bgColor 
-                }]
-            },
-            options : {
-                events: true,
-                easing: 'easeInBounce',                
-                animation: {
-                    duration: 1000,
-                    onComplete: function () {
-                        var chartInstance = this.chart,
-                            ctx = chartInstance.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily)
-                        ctx.textAlign = 'center'
-                        ctx.textBaseline = 'bottom'
-
-                        this.data.datasets.forEach(function (dataset, i) {
-                            var meta = chartInstance.controller.getDatasetMeta(i)
-                            meta.data.forEach(function (bar, index) {
-                                var data = dataset.data[index]
-                                let offsetX = 0;
-                                if(data >0 ){
-                                    if(data <= max * 0.40){
-                                        offsetX += 20
-                                    }else                                    
-                                    offsetX -= 25
-                                }
-                                else{
-                                    if(data >= min*0.60){
-                                        offsetX -=55
-                                    }
-                                    offsetX +=30                                
-                                }
-                                ctx.fillText(data + "%", bar._model.x + offsetX, bar._model.y + 10)
-                            });
-                        });
-                    }
-                }
-            }          
-        });
-        for (let i = 0; i < myChart.data.datasets[0].data.length; i++) {
-            let val = myChart.data.datasets[0].data[i]
-            
-            if ( val < -50 ) {
-                bgColor.push("#ff0000");
-            } else if(val < -25 && val > -50 ) {
-                bgColor.push("#ff1919");
-            } else if (val < -10 && val > -25) {
-                bgColor.push("#ff3232");
-            }
-            else if (val < -5 && val > -10) {
-                bgColor.push("#ff4c4c");
-            }
-            else if (val < 0 && val > -5) {
-                bgColor.push("#ff6666");
-            }
-            else if (val >0 && val < 5) {
-                bgColor.push("#66ff66");
-            }
-            else if (val >5 && val < 10) {
-                bgColor.push("#4cff4c");
-            }
-            else if (val > 10 && val < 25) {
-                bgColor.push("#32ff32");
-            }
-            else if(val > 25 && val < 50){
-                bgColor.push("#19ff19");
-            }
-            else if(val > 50){
-                bgColor.push("#00ff00");
-            }            
-        }
-        
-        
-        myChart.update()
-
+        this.getOption= this.getOption.bind(this)
+        //  variation= {
+        //     labels: ['bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin'],
+        //     percentChange1h: [1,2,3,4,5,6,7,8,9,10],
+        //     percentChange24h: [-0.5, -4.85, -3.67, -5.34, -5.07, -6.65, -7.58, -6.46, -5.02, -3.68],
+        //     percentChange7d: [50, 0, 0, 0, 0, -1, -1, -1, -1, -1]
+        // }
+        this.chart = <Loading/>
+        this.props.getMarketInfo()
         
     }
+
+   
+      
 
     componentWillMount(){
-        this.props.getMarketInfo()
+        
+        
     }
-    componentDidUpdate(){
-        if (this.props.variation.labels.length > 0)
-            this.buildChart(this.props.variation)
+    componentDidUpdate(){        
+       if (this.props.variation.labels.length > 0){
+           
+           this.chart = <ReactEcharts
+               option={this.getOption()}
+               style={{ height: '350px', width: '100%' }}
+               className='react_for_echarts'
+           />   
+       }
+
     }
    
-    render(){   
-        
+   getOption(){
+       
+       let data =[]
+        if(this.props.type==='1h')
+            data = this.props.variation.percentChange1h
+        if(this.props.type==='24h')
+            data = this.props.variation.percentChange24h
+        if(this.props.type==='7d')
+            data = this.props.variation.percentChange7d
+
+       let opt = {
+           title: {
+              
+               subtext: 'From CoinMarketcap',
+           },
+           tooltip: {
+               trigger: 'axis',
+               axisPointer: {            
+                   type: 'shadow'        
+               }
+           },
+           grid: {
+               top: 80,
+               bottom: 30,
+               left: 80               
+           },
+           xAxis: {
+               type: 'value',
+               position: 'top',
+               splitLine: { lineStyle: { type: 'dashed' } },
+           },
+           yAxis: {
+               type: 'category',
+               axisLine: { show: false },
+               axisLabel: { show: true },
+               axisTick: { show: false },
+               splitLine: { show: false },
+               data: this.props.variation.labels,
+               rich: {
+
+               }
+           },
+           series: [
+               {
+                   name: 'Percentage',
+                   type: 'bar',
+                   label:{
+                       normal: {
+                           show: true,
+                           formatter: '{c}%'                        
+                       }
+                   },
+                   data: data
+
+               }
+           ]
+       }
+       console.log(opt)
+       
+       return (opt)
+   }
+    render(){  
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="layer w-100 mB-10">
                     <h5 className="lh-1">{this.props.title}</h5>
                 </div>
                 <div className="layer w-100">
-                    <div className="peers ai-sb fxw-nw">                        
-                        <canvas height ="400" ref={(canvas) => this.canvas = canvas}></canvas>
+                    <div className="peers ai-sb fxw-nw canvas-container">                        
+                         {this.chart}
                     </div>
                 </div>
             </div>
