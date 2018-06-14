@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { getMarketInfo } from '../marketInfoActions'
 
-import MarketChangesCard from './MarketChangesCard'
+import MarketChangesCard from './marketChangesCard'
 
 class MarketChanges extends Component{
     constructor(props){

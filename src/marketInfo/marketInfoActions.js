@@ -7,8 +7,52 @@ export function getMarketInfo(){
         clearInterval(timer)
         timer = setInterval(()=>dispatch(getMarketData()), 30000)
         dispatch(getMarketData())
+      
+      
+    }  
+}
+/**
+ * pairs{
+ *  baseCoin, targetCoin
+ * }
+*/
+export function getTopExchangesByPair(pairs){    
+    return dispatch=>{        
+        let resp =[]
+        let axiosRequests =[]
+        pairs.forEach(async(pair, i)=>{
+            let url = `https://min-api.cryptocompare.com/data/top/exchanges?fsym=${(pair.targetCoin).toUpperCase()}&tsym=${(pair.baseCoin).toUpperCase()}&limit=100`
+            axiosRequests.push(
+                axios.get(url)
+            )         
+            // 
+            // 
+        })
+        Promise.all(axiosRequests)
+            .then(data=>{
+                data.forEach((response)=>{
+                    resp.push(response.data.Data)
+                })                
+                dispatch({ type: 'EXCHANGE_DATA_FETCHED', payload: resp })
+                dispatch(fitTopExchangesByPair())
+            })     
     }
-  
+}
+export function fitTopExchangesByPair(){
+    return (dispatch, getState)=>{    
+        let data = getState().market.exchangeData   
+        let tree = []                
+        data.forEach((value)=>{
+            let totalAmount =0
+            let innerChild = []
+            value.forEach((exchange)=>{
+                totalAmount += exchange.volume24h
+                innerChild.push({value: exchange.volume24h, name: exchange.exchange, path: exchange.toSymbol + "/" + exchange.exchange})
+            })
+            tree.push({value: totalAmount, name:value[0].toSymbol, path: value[0].toSymbol, children:innerChild })
+        })
+        dispatch({type: 'TOP_EXCHANGES_FETCHED', payload: tree})  
+    }
 }
 
 export function getMarketData(){   

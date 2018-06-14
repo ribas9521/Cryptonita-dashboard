@@ -18,17 +18,16 @@ class MarketChangesCard extends Component{
         //     percentChange7d: [50, 0, 0, 0, 0, -1, -1, -1, -1, -1]
         // }
         this.chart = <Loading/>
-        this.props.getMarketInfo()
+        
         
     }
 
    
-      
-
-    componentWillMount(){
-        
-        
+    componentDidMount(){
+        this.props.getMarketInfo()
     }
+
+    
     componentDidUpdate(){        
        if (this.props.variation.labels.length > 0){
            
