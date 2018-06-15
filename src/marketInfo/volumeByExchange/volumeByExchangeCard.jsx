@@ -29,7 +29,6 @@ class VolumeByExchangeCard extends Component{
         this.props.getTopExchangesByPair(this.pairs)
     }
     getOption(){        
-       
         function colorMappingChange(value) {
             var levelOption = getLevelOption(value);
             chart.setOption({
@@ -85,11 +84,11 @@ class VolumeByExchangeCard extends Component{
                         'Volume in BTC: ' + formatUtil.addCommas(value),
                     ].join('');
                 },
-                z:9
+                z: 9
             },
-            
-        series: [
-                {   
+
+            series: [
+                {
                     name: 'Btc volume per exchange',
                     type: 'treemap',
                     visualMin: 300,
@@ -110,19 +109,19 @@ class VolumeByExchangeCard extends Component{
         }
         console.log(this.props.tree)
         return opt
-            
-       
     }
-   
+   componentDidUpdate(){
+       if (this.props.tree) {
+           this.chart = <ReactEcharts
+               option={this.getOption()}
+               style={{ height: '600px', width: '100%' }}
+               className='react_for_echarts'
+           />
+       }
+   }
 
     render() {
-        if(this.props.tree){
-            this.chart = <ReactEcharts
-                option={this.getOption()}
-                style={{ height: '600px', width: '100%' }}
-                className='react_for_echarts'
-            />  
-        }
+        
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="layer w-100 mB-10">

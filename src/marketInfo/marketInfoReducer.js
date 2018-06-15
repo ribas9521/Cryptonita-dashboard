@@ -10,15 +10,20 @@ const INITIAL_STATE = {
         percentChange7d: []
     },
     tree:{
-        value: 0,
-        name: '',
-        path: '',
-        children: []
+       
     },
     exchangeData:{}
 }
 
 export default function(state = INITIAL_STATE , action){
+
+    //   let tree= {
+    //         labels: ['bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin', 'bitcoin'],
+    //         percentChange1h: [1,2,3,4,5,6,7,8,9,10],
+    //         percentChange24h: [-0.5, -4.85, -3.67, -5.34, -5.07, -6.65, -7.58, -6.46, -5.02, -3.68],
+    //         percentChange7d: [50, 0, 0, 0, 0, -1, -1, -1, -1, -1],
+    //         symbols: ['btc', 'btc', 'btc', 'btc', 'btc', 'btc', 'btc', 'btc', 'btc', 'btc',]
+    //     }
     switch(action.type){
         case 'MARKET_INFO_FETCHED':          
             return { ...state, marketInfo: action.payload }
