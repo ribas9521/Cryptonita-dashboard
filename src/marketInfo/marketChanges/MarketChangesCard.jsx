@@ -18,40 +18,41 @@ class MarketChangesCard extends Component{
         //     percentChange7d: [50, 0, 0, 0, 0, -1, -1, -1, -1, -1]
         // }
         this.chart = <Loading/>
-        
-        
     }
 
    
     componentDidMount(){
-        this.props.getMarketInfo()
+        
     }
 
     
-    componentDidUpdate(){        
-       if (this.props.variation.labels.length > 0){
-           
-           this.chart = <ReactEcharts
-               option={this.getOption()}
-               style={{ height: '450px', width: '100%' }}
-               className='react_for_echarts'
-           />   
-       }
-
+    componentWillMount(){
+        this.props.getMarketInfo()
     }
    
    getOption(){
+
+        let variationData = {}
+
+        for(var key in this.props.variation){
+            variationData[key] = this.props.variation[key].filter((value, i) => i < parseInt(this.props.coinAmount))
+        }
+       
+
+    
        
        let data =[]
         if(this.props.type==='1h')
-            data = this.props.variation.percentChange1h
+            data = variationData.percentChange1h
         if(this.props.type==='24h')
-            data = this.props.variation.percentChange24h
+            data = variationData.percentChange24h
         if(this.props.type==='7d')
-            data = this.props.variation.percentChange7d
+            data = variationData.percentChange7d
 
+        
        //data = [1, 2, 3, -4, 5, 6, -7, 8, 9, 10]
-    
+
+       
 
        let chartData = data.map((value)=>{
             let newObj ={
@@ -77,7 +78,7 @@ class MarketChangesCard extends Component{
     //        }
     //    }
        let rich ={}
-       this.props.variation.symbols.map((symbol) => {
+       variationData.symbols.map((symbol) => {
            rich[symbol] = {
                height: 25,
                align: 'center',
@@ -123,7 +124,7 @@ class MarketChangesCard extends Component{
                axisTick: { show: false },
 
                type: 'category',     
-               data: this.props.variation.symbols,
+               data: variationData.symbols,
                inverse: true,
         
                axisLabel: {                   
@@ -159,7 +160,15 @@ class MarketChangesCard extends Component{
        //console.log(opt)
        return (opt)
    }
-    render(){  
+    render(){
+        if (this.props.variation && this.props.variation.labels.length >0 ) {
+
+            this.chart = <ReactEcharts
+                option={this.getOption()}
+                style={{ height: parseInt(this.props.coinAmount) * 50, width: '100%' }}
+                className='react_for_echarts'
+            />
+        }
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="layer w-100 mB-10">

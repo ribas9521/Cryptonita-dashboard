@@ -15,26 +15,28 @@ class MarketChanges extends Component{
        
     }    
     
-    render(){
-        
+    render(){        
         return(            
             <div className="row gap-20">
                 <div className ="col-md-4">
                     <MarketChangesCard
                          title ="1H Changes"
                          type="1h"
+                         coinAmount="50"
                     />
                 </div>
                 <div className ="col-md-4">
                     <MarketChangesCard 
                         title ="24H Changes"
                         type="24h"
+                        coinAmount="30"
                     />
                 </div>
                 <div className ="col-md-4">
                     <MarketChangesCard 
                         title ="7D Changes"
                         type ="7d"
+                        coinAmount="10"
                     />
                 </div>
             </div>           

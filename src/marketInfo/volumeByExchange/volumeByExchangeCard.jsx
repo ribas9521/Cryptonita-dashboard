@@ -110,18 +110,16 @@ class VolumeByExchangeCard extends Component{
         console.log(this.props.tree)
         return opt
     }
-   componentDidUpdate(){
-       if (this.props.tree) {
-           this.chart = <ReactEcharts
-               option={this.getOption()}
-               style={{ height: '600px', width: '100%' }}
-               className='react_for_echarts'
-           />
-       }
-   }
+   
 
-    render() {
-        
+    render() {   
+        if (this.props.tree && this.props.tree.length > 0) {
+            this.chart = <ReactEcharts
+                option={this.getOption()}
+                style={{ height: '600px', width: '100%' }}
+                className='react_for_echarts'
+            />
+        }     
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="layer w-100 mB-10">

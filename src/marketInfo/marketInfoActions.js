@@ -7,8 +7,6 @@ export function getMarketInfo(){
         clearInterval(timer)
         timer = setInterval(()=>dispatch(getMarketData()), 30000)
         dispatch(getMarketData())
-      
-      
     }  
 }
 /**
@@ -57,7 +55,7 @@ export function fitTopExchangesByPair(){
 
 export function getMarketData(){   
     return dispatch => {
-        const request = axios.get(`${BASE_URL}?limit=10`)
+        const request = axios.get(`${BASE_URL}?limit=100`)
             .then(resp => (dispatch({ type: 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data) })))
             .then(resp => (dispatch(setVariationData())))
 
@@ -71,7 +69,7 @@ export function getMarketData(){
     } 
 }
 
-export function setVariationData(period){
+export function setVariationData(){
     return(dispatch, getState)=>{        
         let data = getState().market.marketInfo
         let variation = {
