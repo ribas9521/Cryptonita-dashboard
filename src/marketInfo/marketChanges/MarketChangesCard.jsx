@@ -111,10 +111,10 @@ class MarketChangesCard extends Component{
                splitLine: {show: false},
                axisTick: { show: false },
                axisLine:{
-                   lineStyle: {
-                       color: '#ccc'
-                   }
-               }
+                   show:false              
+                   
+               },
+               axisLabel:{show:false}
 
               
                //splitLine: { lineStyle: { type: 'dashed' } },
