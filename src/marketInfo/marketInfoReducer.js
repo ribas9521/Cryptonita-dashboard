@@ -7,12 +7,16 @@ const INITIAL_STATE = {
         labels:[],
         percentChange1h: [],
         percentChange24h: [],
-        percentChange7d: []
+        percentChange7d: []        
     },
     tree:{
        
     },
-    exchangeData:{}
+    exchangeData:{},
+    coinAmount:{
+        amount:10,
+        type: 'all'
+    }
 }
 
 export default function(state = INITIAL_STATE , action){
@@ -33,6 +37,8 @@ export default function(state = INITIAL_STATE , action){
             return {...state, tree: action.payload}
         case 'EXCHANGE_DATA_FETCHED':
             return {...state, exchangeData: action.payload}
+        case 'COIN_AMOUNT_CHANGED':
+            return {...state, coinAmount: action.payload}
         default:
             return state
     }

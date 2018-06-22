@@ -61,10 +61,15 @@ export function getMarketData(){
 
     }
     function toArray(obj) {
+        
         let data = []
         for (var key in obj) {
             data.push(obj[key])
         }
+        data = data.sort((a, b)=>{
+            return a.rank -b.rank
+        })
+
         return data
     } 
 }
@@ -88,5 +93,11 @@ export function setVariationData(){
         })
         dispatch({type: 'MARKET_VARIATION_FETCHED', payload: variation})
         
+    }
+}
+
+export function setCoinAmount(coinAmount){
+    return dispatch=>{
+        dispatch({type:'COIN_AMOUNT_CHANGED', payload: coinAmount})
     }
 }
