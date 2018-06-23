@@ -1,6 +1,5 @@
 import axios from 'axios'
 const BASE_URL = 'https://api.coinmarketcap.com/v2/ticker/'
-
 let timer = null
 export function getMarketInfo(){
     return dispatch=>{        
@@ -52,7 +51,6 @@ export function fitTopExchangesByPair(){
         dispatch({type: 'TOP_EXCHANGES_FETCHED', payload: tree})  
     }
 }
-
 export function getMarketData(){   
     return dispatch => {
         const request = axios.get(`${BASE_URL}?limit=100`)
@@ -80,19 +78,19 @@ export function setVariationData(){
         let variation = {
             labels: [],
             symbols:[],
+            names:[],
             percentChange1h: [],
             percentChange24h: [],
             percentChange7d: []
         }     
         data.map((value, i)=>{
-            variation.labels.push(value.name)
             variation.symbols.push((value.symbol).toLowerCase())
+            variation.names.push((value.name).replace(/ /g, '').replace(/\./g, 'Dot'))
             variation.percentChange1h.push(value.quotes.USD.percent_change_1h)
             variation.percentChange24h.push(value.quotes.USD.percent_change_24h)
             variation.percentChange7d.push(value.quotes.USD.percent_change_7d)
         })
         dispatch({type: 'MARKET_VARIATION_FETCHED', payload: variation})
-        
     }
 }
 

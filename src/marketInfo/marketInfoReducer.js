@@ -7,7 +7,9 @@ const INITIAL_STATE = {
         labels:[],
         percentChange1h: [],
         percentChange24h: [],
-        percentChange7d: []        
+        percentChange7d: [],
+        symbols:[],
+        names:[]        
     },
     tree:{
        

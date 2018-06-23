@@ -9,9 +9,8 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
-
-
 import Loading from '../../common/template/loading/loading'
+import DropDown from '../../common/template/ui/dropDown/dropDown'
 
 
 class MarketChangesCard extends Component{
@@ -26,6 +25,7 @@ class MarketChangesCard extends Component{
         //     percentChange7d: [50, 0, 0, 0, 0, -1, -1, -1, -1, -1]
         // }
         this.chart = <Loading/>
+        this.items = ['Rank', 'Variation up', 'Variation down']
        
     }
     shouldComponentUpdate(nextProps, nextState){
@@ -37,7 +37,7 @@ class MarketChangesCard extends Component{
     }
     componentDidMount(){
         this.component.addEventListener('scroll', this.handleScroll)
-        //$(this.component).on('scroll', this.handleScroll)
+        
     }
     componentWillUnmount() {
         this.component.removeEventListener('scroll',()=>null)
@@ -75,17 +75,19 @@ class MarketChangesCard extends Component{
            return newObj
        })
        let rich ={}
-       variationData.symbols.map((symbol) => {
-           rich[symbol] = {
-               height: 25,
+       variationData.symbols.map((symbol, i) => {
+        //    rich[variationData.names[i]] = {
+           rich[variationData.names[i]] = {
+               height: 32,
                align: 'center',
                backgroundColor: {
-                   image: '../../assets/static/images/crypto-icons/' + symbol + '.png'
+                   image: 'https://raw.githubusercontent.com/hyperdexapp/cryptocurrency-icons/master/32/color/' + symbol +'.png',
+                   alt: symbol
                }
+               
            }
        })
        let opt = {
-           
            tooltip: {
                trigger: 'axis',
                axisPointer: {            
@@ -93,7 +95,7 @@ class MarketChangesCard extends Component{
                }
            },
            grid: {
-               top: 80,
+               top: 30,
                bottom: 30,
                left: 80               
            },
@@ -110,11 +112,12 @@ class MarketChangesCard extends Component{
            yAxis: {
                axisTick: { show: false },
                type: 'category',     
-               data: variationData.symbols,
+               data: variationData.names,
                inverse: true,
                axisLabel: {                   
-                    formatter: function (value) {                       
-                        return '{' + value + '| }'
+                    formatter: function (value, i) {
+                        let resp = i + 1 + '  {' + value + '| }'
+                        return resp
                     },                   
                     rich:rich
                 },
@@ -130,7 +133,7 @@ class MarketChangesCard extends Component{
                    name: 'Percentage',
                    type: 'bar',
                    label:{
-                       normal: {
+                       normal: {                                               
                            show: true,
                            formatter: '{c}%'                        
                        }
@@ -142,7 +145,7 @@ class MarketChangesCard extends Component{
        return (opt)
    }
     render(){
-        if (this.props.variation && this.props.variation.labels.length >0 ) {
+        if (this.props.variation && this.props.variation.names.length >0 ) {
             this.chart =     
                     <ReactEcharts
                         echarts = {echarts}
@@ -153,10 +156,18 @@ class MarketChangesCard extends Component{
         }
         return(
             <div className="layers bd bgc-white p-20">
-                <div className="layer w-100 mB-10">
-                    <h5 className="lh-1">{this.props.title}</h5>
-                    <h6>Amonut of coins showing: {this.coinAmount}</h6>
+                <div className="container mB-20">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h5 className="lh-1">{this.props.title}</h5>
+                            <h6>Coins showing: {this.coinAmount}</h6>
+                        </div>
+                        <div className="col-md-6">
+                            <DropDown items={this.items} />
+                        </div>                    
+                    </div>                    
                 </div>
+                
                 <div className="layer w-100">
                         <div className="peers ai-sb fxw-nw canvas-container" 
                             ref={(ref)=>this.component = ref}>                             
