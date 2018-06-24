@@ -11,14 +11,15 @@ const INITIAL_STATE = {
         symbols:[],
         names:[]        
     },
-    tree:{
-       
+    tree:{       
     },
     exchangeData:{},
     coinAmount:{
         amount:10,
         type: 'all'
-    }
+    },
+    coinSortType:'rank',
+    activeComponent: 'all'
 }
 
 export default function(state = INITIAL_STATE , action){
@@ -41,6 +42,10 @@ export default function(state = INITIAL_STATE , action){
             return {...state, exchangeData: action.payload}
         case 'COIN_AMOUNT_CHANGED':
             return {...state, coinAmount: action.payload}
+        case 'COIN_SORT_TYPE_CHANGED':
+            return { ...state, coinSortType: action.payload}
+        case 'ACTIVE_COMPONENT_CHANGED':
+            return { ...state, activeComponent: action.payload}
         default:
             return state
     }

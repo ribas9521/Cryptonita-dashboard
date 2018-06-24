@@ -1,13 +1,12 @@
 import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setCoinAmount } from '../marketInfoActions'
+import { setCoinAmount, coinChartSort } from '../marketInfoActions'
 
 import ReactEcharts from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
 
 import Loading from '../../common/template/loading/loading'
 import DropDown from '../../common/template/ui/dropDown/dropDown'
@@ -29,7 +28,7 @@ class MarketChangesCard extends Component{
        
     }
     shouldComponentUpdate(nextProps, nextState){
-        return (this.props.type === nextProps.coinAmount.type) || nextProps.coinAmount.type === 'all'
+        return this.props.type === nextProps.activeComponent || nextProps.activeComponent === 'all'
     }
 
     componentWillMount(){
@@ -163,7 +162,10 @@ class MarketChangesCard extends Component{
                             <h6>Coins showing: {this.coinAmount}</h6>
                         </div>
                         <div className="col-md-6">
-                            <DropDown items={this.items} />
+                            <DropDown items={this.items} 
+                                handleClick = {this.props.coinChartSort} 
+                                type={this.props.type}
+                                value={this.props.coinSortType}/>
                         </div>                    
                     </div>                    
                 </div>
@@ -182,8 +184,10 @@ class MarketChangesCard extends Component{
 }
 
 const mapStateToProps = state => {
-    return { coinAmount: state.market.coinAmount }
+    return { coinAmount: state.market.coinAmount, 
+        coinSortType: state.market.coinSortType, 
+        activeComponent: state.market.activeComponent }
 }
-const mapDipatchToProps = dispatch => bindActionCreators({ setCoinAmount }, dispatch)
+const mapDipatchToProps = dispatch => bindActionCreators({ setCoinAmount, coinChartSort }, dispatch)
 
 export default connect(mapStateToProps, mapDipatchToProps)(MarketChangesCard)

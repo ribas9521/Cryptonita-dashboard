@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import '../../../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' 
+
 
 
 export default class DropDown extends Component{
@@ -9,20 +9,22 @@ export default class DropDown extends Component{
     }
 
     renderItems(){
-        const items  = this.props.items || []
-        return items.map((item, i)=>(
-            <a class="dropdown-item" role="button" key={i}>{item}</a>            
-        ))
         
-    }
-    componentDidMount() {
+        const items  = this.props.items || []
        
+        return items.map((item, i)=>(            
+            <a className="dropdown-item" role="button" key={i} 
+                onClick={()=>this.props.handleClick([item, this.props.type])}>{item + " " + this.props.type}
+            </a>            
+        ))        
     }
+   
+
 
     render(){
         return( 
             <div className="btn-group">
-                <button type="button" className="btn btn-danger">Action</button>
+                <button type="button" className="btn btn-light">{this.props.value}</button>
                 <button type="button" className="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span className="sr-only">Toggle Dropdown</span>
                 </button>
