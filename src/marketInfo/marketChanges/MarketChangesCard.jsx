@@ -7,6 +7,7 @@ import ReactEcharts from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/toolbox';
 
 import Loading from '../../common/template/loading/loading'
 import DropDown from '../../common/template/ui/dropDown/dropDown'
@@ -93,6 +94,7 @@ class MarketChangesCard extends Component{
                    type: 'shadow'        
                }
            },
+           
            grid: {
                top: 30,
                bottom: 30,
@@ -115,7 +117,7 @@ class MarketChangesCard extends Component{
                inverse: true,
                axisLabel: {                   
                     formatter: function (value, i) {
-                        let resp = i + 1 + '  {' + value + '| }'
+                        let resp = i + 1 + '  {' + value + '| }\n' + variationData.symbols[i].toUpperCase()
                         return resp
                     },                   
                     rich:rich
@@ -149,10 +151,11 @@ class MarketChangesCard extends Component{
                     <ReactEcharts
                         echarts = {echarts}
                         option={this.getOption()}
-                        style={{ height: parseInt(this.coinAmount) * 50, width: '100%' }}
+                        style={{ height: parseInt(this.coinAmount) * 70, width: '100%' }}
                         className='react_for_echarts'                       
                     />
         }
+        console.log(this.props.coinSortType)
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="container mB-20">
@@ -165,13 +168,13 @@ class MarketChangesCard extends Component{
                             <DropDown items={this.items} 
                                 handleClick = {this.props.coinChartSort} 
                                 type={this.props.type}
-                                value={this.props.coinSortType}/>
+                                value={this.props.coinSortType[this.props.type]}/>
                         </div>                    
                     </div>                    
                 </div>
                 
                 <div className="layer w-100">
-                        <div className="peers ai-sb fxw-nw canvas-container" 
+                    <div className="peers ai-sb fxw-nw canvas-container" crossOrigin="Anonymous"
                             ref={(ref)=>this.component = ref}>                             
                             {this.chart}                        
                         </div>     

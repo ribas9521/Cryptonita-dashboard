@@ -15,9 +15,9 @@ export function getMarketInfo(){
 */
 
 export function getMarketData(){   
-    return (dispatch, getState) => {
-        let sort = getState().market.coinSortType
+    return (dispatch, getState) => {        
         let component = getState().market.activeComponent
+        let sort = getState().market.coinSortType[component]
         const request = axios.get(`${BASE_URL}?limit=100`)           
             .then(resp => (dispatch({ type: 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data, sort,component) })))
             .then(resp => (dispatch(setVariationData())))
@@ -29,7 +29,7 @@ export function getMarketData(){
         for (var key in obj) {
             data.push(obj[key])
         }
-        if(sort === 'rank'){
+        if(sort === 'Rank'){
             data = data.sort((a, b)=>{
                 return a.rank -b.rank
             })
@@ -73,7 +73,6 @@ export function setVariationData(){
     return(dispatch, getState)=>{        
         let data = getState().market.marketInfo
         let variation = {
-            labels: [],
             symbols:[],
             names:[],
             percentChange1h: [],
@@ -94,14 +93,23 @@ export function setVariationData(){
 export function setCoinAmount(coinAmount){
     return dispatch=>{
         dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload: coinAmount.type })
+        dispatch(getMarketData())
         dispatch({type:'COIN_AMOUNT_CHANGED', payload: coinAmount})
     }
 }
 
 export function coinChartSort(item){
-    return dispatch=>{
-        dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload: item[1] })
-        dispatch([{ type: 'COIN_SORT_TYPE_CHANGED', payload: item[0] }, getMarketData()])
+    return (dispatch, getState)=>{
+        const coinSortType = getState().market.coinSortType
+        if (item.type === '1h')
+            coinSortType['1h'] = item.item
+        else if (item.type === '24h')
+            coinSortType['24h'] = item.item
+        else if (item.type === '7d')
+            coinSortType['7d'] = item.item
+
+        dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload: item.type })
+        dispatch([{ type: 'COIN_SORT_TYPE_CHANGED', payload: coinSortType }, getMarketData()])
     }
 }
 

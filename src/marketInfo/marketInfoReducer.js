@@ -18,7 +18,11 @@ const INITIAL_STATE = {
         amount:10,
         type: 'all'
     },
-    coinSortType:'rank',
+    coinSortType:{
+        '1h': 'Rank',
+        '24h':'Rank',
+        '7d':'Rank'
+    },
     activeComponent: 'all'
 }
 
