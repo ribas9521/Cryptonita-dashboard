@@ -23,7 +23,8 @@ const INITIAL_STATE = {
         '24h':'Rank',
         '7d':'Rank'
     },
-    activeComponent: 'all'
+    activeComponent: 'all',
+    coinImages:{}
 }
 
 export default function(state = INITIAL_STATE , action){
@@ -50,6 +51,8 @@ export default function(state = INITIAL_STATE , action){
             return { ...state, coinSortType: action.payload}
         case 'ACTIVE_COMPONENT_CHANGED':
             return { ...state, activeComponent: action.payload}
+        case 'COIN_IMAGES_FETCHED':
+            return { ...state, coinImages: action.payload }
         default:
             return state
     }

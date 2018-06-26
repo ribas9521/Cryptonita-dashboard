@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCoinAmount, coinChartSort } from '../marketInfoActions'
 
+import axios from 'axios'
 import ReactEcharts from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
@@ -26,6 +27,7 @@ class MarketChangesCard extends Component{
         // }
         this.chart = <Loading/>
         this.items = ['Rank', 'Variation up', 'Variation down']
+        this.logo = '../../assets/static/images/logo.png'
        
     }
     shouldComponentUpdate(nextProps, nextState){
@@ -53,6 +55,14 @@ class MarketChangesCard extends Component{
    getOption(){
         this.coinAmount = this.props.coinAmount.amount <= 100 ? this.props.coinAmount.amount : 100
         let variationData = {}
+        let coinImages={}
+        for(let key in this.props.coinImages){
+            if(this.props.coinImages[key] === 'fail')
+                coinImages[key] = this.logo
+            else
+                coinImages[key] = this.props.coinImages[key]
+        }
+        
         for(var key in this.props.variation){
             variationData[key] = this.props.variation[key].filter((value, i) => i < parseInt(this.coinAmount))
         }
@@ -75,16 +85,14 @@ class MarketChangesCard extends Component{
            return newObj
        })
        let rich ={}
-       variationData.symbols.map((symbol, i) => {
-        //    rich[variationData.names[i]] = {
+       variationData.symbols.map(async(symbol, i) => {          
            rich[variationData.names[i]] = {
                height: 32,
                align: 'center',
                backgroundColor: {
-                   image: 'https://raw.githubusercontent.com/hyperdexapp/cryptocurrency-icons/master/32/color/' + symbol +'.png',
+                   image:coinImages[symbol],
                    alt: symbol
-               }
-               
+               }               
            }
        })
        let opt = {
@@ -155,7 +163,7 @@ class MarketChangesCard extends Component{
                         className='react_for_echarts'                       
                     />
         }
-        console.log(this.props.coinSortType)
+     
         return(
             <div className="layers bd bgc-white p-20">
                 <div className="container mB-20">
@@ -189,7 +197,8 @@ class MarketChangesCard extends Component{
 const mapStateToProps = state => {
     return { coinAmount: state.market.coinAmount, 
         coinSortType: state.market.coinSortType, 
-        activeComponent: state.market.activeComponent }
+        activeComponent: state.market.activeComponent,
+        coinImages: state.market.coinImages }
 }
 const mapDipatchToProps = dispatch => bindActionCreators({ setCoinAmount, coinChartSort }, dispatch)
 

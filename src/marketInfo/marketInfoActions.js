@@ -1,19 +1,40 @@
 import axios from 'axios'
 const BASE_URL = 'https://api.coinmarketcap.com/v2/ticker/'
+
 let timer = null
 export function getMarketInfo(){
     return dispatch=>{        
-        clearInterval(timer)        
-        //timer = setInterval(()=>dispatch(getMarketData()), 30000)
+        clearInterval(timer)
+        dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload:'all'})        
+        timer = setInterval(()=>dispatch(getMarketData()), 30000)
         dispatch(getMarketData())
     }  
 }
+
 /**
  * pairs{
  *  baseCoin, targetCoin
  * }
 */
-
+export function getCoinImages(symbols){
+    return dispatch=>{
+        let images ={}
+        symbols.forEach(async(symbol, i)=>{
+            let url = `https://raw.githubusercontent.com/hyperdexapp/cryptocurrency-icons/master/32/color/${symbol}.png`
+            try{
+               let image = await axios.get(url)
+               images[symbol] = url
+            }
+            catch(e){                
+                images[symbol] = "fail"
+            }
+            finally{
+                if(Object.keys(images).length>= symbols.length)
+                    dispatch({type: 'COIN_IMAGES_FETCHED', payload: images})
+            }    
+        }) 
+    }
+}
 export function getMarketData(){   
     return (dispatch, getState) => {        
         let component = getState().market.activeComponent
@@ -70,7 +91,7 @@ export function getMarketData(){
 }
 
 export function setVariationData(){
-    return(dispatch, getState)=>{        
+    return (dispatch, getState)=>{        
         let data = getState().market.marketInfo
         let variation = {
             symbols:[],
@@ -86,7 +107,9 @@ export function setVariationData(){
             variation.percentChange24h.push(value.quotes.USD.percent_change_24h)
             variation.percentChange7d.push(value.quotes.USD.percent_change_7d)
         })
-        dispatch({type: 'MARKET_VARIATION_FETCHED', payload: variation})
+        
+        dispatch([{ type: 'MARKET_VARIATION_FETCHED', payload: variation },
+         getCoinImages(variation.symbols)])
     }
 }
 
