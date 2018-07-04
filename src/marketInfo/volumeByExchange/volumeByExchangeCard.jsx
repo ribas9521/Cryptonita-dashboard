@@ -126,7 +126,7 @@ class VolumeByExchangeCard extends Component{
                     <h5 className="lh-1">{this.props.title}</h5>
                 </div>
                 <div className="layer w-100">
-                    <div className="peers ai-sb fxw-nw canvas-container">
+                    <div className="peers ai-sb fxw-nw">
                     
                         {this.chart}
                     </div>

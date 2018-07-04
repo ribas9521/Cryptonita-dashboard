@@ -7,7 +7,7 @@ export function getMarketInfo(){
         clearInterval(timer)
         dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload:'all'})        
         timer = setInterval(()=>dispatch(getMarketData()), 30000)
-        dispatch(getMarketData())
+        dispatch([getMarketData()])
     }  
 }
 
@@ -16,13 +16,14 @@ export function getMarketInfo(){
  *  baseCoin, targetCoin
  * }
 */
-export function getCoinImages(symbols){
-    return dispatch=>{
+export function getCoinImages(){    
+    return (dispatch, getState)=>{
+        let symbols = getState().market.variation.symbols
         let images ={}
         symbols.forEach(async(symbol, i)=>{
-            let url = `https://raw.githubusercontent.com/hyperdexapp/cryptocurrency-icons/master/32/color/${symbol}.png`
+            const url = `https://raw.githubusercontent.com/hyperdexapp/cryptocurrency-icons/master/32/color/${symbol}.png`
             try{
-               let image = await axios.get(url)
+               await axios.get(url)
                images[symbol] = url
             }
             catch(e){                
@@ -37,62 +38,65 @@ export function getCoinImages(symbols){
 }
 export function getMarketData(){   
     return (dispatch, getState) => {        
-        let component = getState().market.activeComponent
-        let sort = getState().market.coinSortType[component]
-        const request = axios.get(`${BASE_URL}?limit=100`)           
-            .then(resp => (dispatch({ type: 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data, sort,component) })))
+       
+        const request = axios.get(`${BASE_URL}?limit=50`)           
+            .then(resp => (dispatch({ type: 'MARKET_INFO_FETCHED', payload: toArray(resp.data.data) })))
             .then(resp => (dispatch(setVariationData())))
 
     }
     function toArray(obj, sort, component) {
-        
         let data = []
         for (var key in obj) {
             data.push(obj[key])
         }
-        if(sort === 'Rank'){
-            data = data.sort((a, b)=>{
-                return a.rank -b.rank
-            })
-        }
-        else if(sort === 'Variation down' && component==='1h'){
-            data = data.sort((a, b) => {
-                return a.quotes.USD.percent_change_1h - b.quotes.USD.percent_change_1h
-            })
-        }
-        else if(sort === 'Variation down' && component==='24h'){
-            data = data.sort((a, b) => {
-                return a.quotes.USD.percent_change_24h - b.quotes.USD.percent_change_24h
-            })
-        }
-        else if(sort === 'Variation down' && component==='7d'){
-            data = data.sort((a, b) => {
-                return a.quotes.USD.percent_change_7d - b.quotes.USD.percent_change_7d
-            })
-        }
-        else if (sort === 'Variation up' && component === '1h') {
-            data = data.sort((a, b) => {
-                return b.quotes.USD.percent_change_1h - a.quotes.USD.percent_change_1h
-            })
-        }
-        else if (sort === 'Variation up' && component === '24h') {
-            data = data.sort((a, b) => {
-                return b.quotes.USD.percent_change_24h - a.quotes.USD.percent_change_24h
-            })
-        }
-        else if (sort === 'Variation up' && component === '7d') {
-            data = data.sort((a, b) => {
-                return b.quotes.USD.percent_change_7d - a.quotes.USD.percent_change_7d
-            })
-        }
-
         return data
     } 
 }
 
+const sortCoins=(data, sort, component) =>{
+    if (sort === 'Rank') {
+        data = data.sort((a, b) => {
+            return a.rank - b.rank
+        })
+    }
+    else if (sort === 'Variation down' && component === '1h') {
+        data = data.sort((a, b) => {
+            return a.quotes.USD.percent_change_1h - b.quotes.USD.percent_change_1h
+        })
+    }
+    else if (sort === 'Variation down' && component === '24h') {
+        data = data.sort((a, b) => {
+            return a.quotes.USD.percent_change_24h - b.quotes.USD.percent_change_24h
+        })
+    }
+    else if (sort === 'Variation down' && component === '7d') {
+        data = data.sort((a, b) => {
+            return a.quotes.USD.percent_change_7d - b.quotes.USD.percent_change_7d
+        })
+    }
+    else if (sort === 'Variation up' && component === '1h') {
+        data = data.sort((a, b) => {
+            return b.quotes.USD.percent_change_1h - a.quotes.USD.percent_change_1h
+        })
+    }
+    else if (sort === 'Variation up' && component === '24h') {
+        data = data.sort((a, b) => {
+            return b.quotes.USD.percent_change_24h - a.quotes.USD.percent_change_24h
+        })
+    }
+    else if (sort === 'Variation up' && component === '7d') {
+        data = data.sort((a, b) => {
+            return b.quotes.USD.percent_change_7d - a.quotes.USD.percent_change_7d
+        })
+    }
+    return data
+}
+
 export function setVariationData(){
-    return (dispatch, getState)=>{        
-        let data = getState().market.marketInfo
+    return (dispatch, getState)=>{
+        let component = getState().market.activeComponent
+        let sort = getState().market.coinSortType[component]        
+        let data = sortCoins(getState().market.marketInfo, sort, component)
         let variation = {
             symbols:[],
             names:[],
@@ -108,15 +112,16 @@ export function setVariationData(){
             variation.percentChange7d.push(value.quotes.USD.percent_change_7d)
         })
         
-        dispatch([{ type: 'MARKET_VARIATION_FETCHED', payload: variation },
-         getCoinImages(variation.symbols)])
+        dispatch([{ type: 'MARKET_VARIATION_FETCHED', payload: variation },getCoinImages()])
+            
+         
     }
 }
 
 export function setCoinAmount(coinAmount){
     return dispatch=>{
         dispatch({ type: 'ACTIVE_COMPONENT_CHANGED', payload: coinAmount.type })
-        dispatch(getMarketData())
+        dispatch(setVariationData())
         dispatch({type:'COIN_AMOUNT_CHANGED', payload: coinAmount})
     }
 }

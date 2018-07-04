@@ -21,7 +21,8 @@ const INITIAL_STATE = {
     coinSortType:{
         '1h': 'Rank',
         '24h':'Rank',
-        '7d':'Rank'
+        '7d':'Rank',
+        'all': 'Rank'
     },
     activeComponent: 'all',
     coinImages:{}
