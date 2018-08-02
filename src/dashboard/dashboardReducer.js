@@ -1,9 +1,9 @@
 const INITIAL_STATE={
     apps: {
-        percentChange1h: false,
-        percentChange24h: false,
-        percentChange7d: false,
-        volumeByExchange: false
+        percentChange1h: true,
+        percentChange24h: true,
+        percentChange7d: true,
+        volumeByExchange: true
     }
 }
 

@@ -52,7 +52,7 @@ export class Dashboard extends Component{
         if (apps.percentChange7d) {
             this.percentChange7d = <div className="col-md-4 ">
                 <MarketChangesCard
-                    title="7d Changes"
+                    title="7D Changes"
                     type="7d"
                     variation={this.props.variation}
                 />
@@ -61,7 +61,7 @@ export class Dashboard extends Component{
         else { this.percentChange7d = "" }
         if(apps.volumeByExchange){
             this.volumeByExchange = <div className="col-md-12">
-                <VolumeByExchangeCard />
+                <VolumeByExchangeCard title="Volume of Bitcoin traded by exchanges" />
             </div>
         }
         else{this.volumeByExchange = ""}
@@ -84,40 +84,52 @@ export class Dashboard extends Component{
                     title="Cryptonita Apps">
                     <div className="">
                         <form>
-                            <input
-                                name="percentChange1h" 
-                                onChange={this.handleChange} 
-                                type="checkbox" id="1h"
-                                checked={apps.percentChange1h} 
-                                className="col-md-12"/>
-                                <label htmlFor="1h">Market changes 1h</label>
-                            <input
-                                name="percentChange24h" 
-                                onChange={this.handleChange} 
-                                type="checkbox" id="24h"
-                                checked={apps.percentChange24h}  
-                                className="col-md-12"/>
-                                <label htmlFor="24h">
-                                    Market changes 24h
-                                </label>
-                            <input
-                                name="percentChange7d" 
-                                onChange={this.handleChange} 
-                                type="checkbox" id="7d" 
-                                checked={apps.percentChange7d}
-                                className="col-md-12"/>
-                                <label htmlFor="7d">
-                                    Market changes 7d
-                                </label>
-                            <input 
-                                name="volumeByExchange"
-                                onChange={this.handleChange} 
-                                type="checkbox" id="volumeExchange"
-                                checked={apps.volumeByExchange} 
-                                className="col-md-12"/>
-                                <label htmlFor="volumeExchange">
-                                    Volume by exchange
-                                </label>
+                            <ul>
+                                <li>
+                                    <input
+                                        name="percentChange1h" 
+                                        onChange={this.handleChange} 
+                                        type="checkbox" id="1h"
+                                        checked={apps.percentChange1h} 
+                                       />
+                                        <label htmlFor="1h">
+                                            Market changes 1h
+                                        </label>
+                                </li>
+                                <li>
+                                    <input
+                                        name="percentChange24h" 
+                                        onChange={this.handleChange} 
+                                        type="checkbox" id="24h"
+                                        checked={apps.percentChange24h}  
+                                      />
+                                        <label htmlFor="24h">
+                                            Market changes 24h
+                                        </label>
+                                </li>
+                                <li>
+                                    <input
+                                        name="percentChange7d" 
+                                        onChange={this.handleChange} 
+                                        type="checkbox" id="7d" 
+                                        checked={apps.percentChange7d}
+                                       />
+                                        <label htmlFor="7d">
+                                            Market changes 7d
+                                        </label>
+                                </li>
+                                <li>
+                                    <input 
+                                        name="volumeByExchange"
+                                        onChange={this.handleChange} 
+                                        type="checkbox" id="volumeExchange"
+                                        checked={apps.volumeByExchange} 
+                                       />
+                                        <label htmlFor="volumeExchange">
+                                            Volume by exchange
+                                        </label>
+                                </li>
+                            </ul>
                         </form>                        
                     </div>
                 </Modal>
