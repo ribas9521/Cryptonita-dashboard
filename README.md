@@ -2,7 +2,7 @@
 **Cryptonita Dashboard** is a tool to help people to analyse the cryptocurrency market
 
 Used technology: 
-Adminator template dashboard
+Adminator
 React
 Redux
 Webpack 3.8
