@@ -5,7 +5,7 @@
   "description": "HTML Admin Template",
   "scripts": {
     "start": "webpack-dev-server",
-    "dev": "webpack-dev-server --hot --open",
+    "dev": "webpack-dev-server",
     "clean": "shx rm -rf ./build",
     "build": "npm run clean && cross-env NODE_ENV=\"production\" webpack",
     "preview": "cross-env NODE_ENV=\"production\" webpack-dev-server",
@@ -64,7 +64,6 @@
     "bootstrap": "^4.0.0",
     "bootstrap-datepicker": "^1.7.1",
     "datatables": "^1.10.13",
-    "easy-pie-chart": "^2.1.7",
     "echarts-for-react": "^2.0.12-beta.0",
     "file-loader": "^1.1.5",
     "fullcalendar": "^3.6.2",
@@ -77,8 +76,7 @@
     "moment": "^2.19.1",
     "perfect-scrollbar": "^1.1.0",
     "popper.js": "^1.12.6",
-    "react-lazyload": "^2.3.0",
-    "shouldcomponentupdate-children": "^1.1.0",
-    "skycons": "^1.0.0"
+    "ts-loader": "^4.4.2",
+    "typescript": "^2.9.2"
   }
 }

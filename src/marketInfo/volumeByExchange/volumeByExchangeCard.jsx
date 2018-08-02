@@ -56,7 +56,7 @@ class VolumeByExchangeCard extends Component{
                     }
                 },
                 {
-                    colorSaturation: [0.35, 0.5],
+                    colorSaturation: [0.0, 0.1],
                     itemStyle: {
                         normal: {
                             gapWidth: 1,
@@ -102,7 +102,7 @@ class VolumeByExchangeCard extends Component{
                             borderColor: '#fff'
                         }
                     },
-                    levels: getLevelOption(),
+                    //levels: getLevelOption(),
                     data: this.props.tree
                 }
             ]
@@ -140,6 +140,6 @@ class VolumeByExchangeCard extends Component{
 const mapStateToProps = state => {
     return { tree: state.market.tree }
 }
-const mapDipatchToProps = dispatch => bindActionCreators({ getTopExchangesByPair }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ getTopExchangesByPair }, dispatch)
 
-export default connect(mapStateToProps, mapDipatchToProps)(VolumeByExchangeCard)
+export default connect(mapStateToProps, mapDispatchToProps)(VolumeByExchangeCard)
