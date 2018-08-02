@@ -1,6 +1,9 @@
 import React from 'react'
 import '../assets/styles/index.scss'
 import '../assets/styles/master.scss'
+import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' 
+
+
 
 import {  HashRouter } from 'react-router-dom'
 

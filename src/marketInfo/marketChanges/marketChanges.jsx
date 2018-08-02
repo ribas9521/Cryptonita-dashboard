@@ -4,25 +4,51 @@ import { bindActionCreators } from 'redux'
 
 import { getMarketInfo } from '../marketInfoActions'
 
+import MarketChangesCard from './marketChangesCard'
+
+
 class MarketChanges extends Component{
-    
-    componentWillMount(){
-       this.props.getMarketInfo()
+    constructor(props){
+        super(props)
     }
-    render(){
-        //const { name, symbol, percentChange1h, percentChange24h, percentChange7d} = this.props.marketInfo
-        console.log(this.props.marketInfo);
-        return(
-            // <div>
-            //     <h1>{name}</h1>
-            //     <h1>{symbol}</h1>
-            //     <h1>{percentChange1h}</h1>
-            // </div>
-            <h1>tteste</h1>
+    
+    componentWillMount(){              
+        this.props.getMarketInfo()
+    }    
+
+  
+    
+    render(){        
+        return(            
+            <div className="row gap-20">
+                <div className ="col-md-4 ">
+                    <MarketChangesCard
+                         title ="1H Changes"
+                         type="1h"                         
+                         variation = {this.props.variation}
+                    />
+                </div>
+                <div className ="col-md-4">
+                    <MarketChangesCard 
+                        title ="24H Changes"
+                        type="24h"                        
+                        variation={this.props.variation}
+                    />
+                </div>
+                <div className ="col-md-4">
+                    <MarketChangesCard 
+                        title ="7D Changes"
+                        type ="7d"                        
+                        variation={this.props.variation}
+                    />
+                </div>
+            </div>           
         )
     }    
 }
 
-const mapStateToProps = state =>({marketInfo: state.market.marketInfo})
-const mapDipatchToProps = dispatch => bindActionCreators({getMarketInfo}, dispatch)
+const mapStateToProps = state => {
+    return { variation: state.market.variation }
+}
+const mapDipatchToProps = dispatch => bindActionCreators({ getMarketInfo }, dispatch)
 export default connect(mapStateToProps, mapDipatchToProps)(MarketChanges)
