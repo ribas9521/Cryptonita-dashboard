@@ -2,6 +2,7 @@ import React from 'react'
 
 import SearchBox from './search/searchBox'
 import SearchInput from './search/searchInput'
+import LoginStatus from '../../../sign/login/loginStatus'
 
 
 export default class Header extends React.Component{
@@ -31,8 +32,9 @@ export default class Header extends React.Component{
                                 <i className="ti-menu"></i>
                             </a>
                         </li>
-                        <SearchBox/>
-                        <SearchInput/>
+                        {/* <SearchBox/>
+                        <SearchInput/> */}
+                        <li><LoginStatus/></li>
                     </ul>
                 </div>
             </div>
