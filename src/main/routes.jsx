@@ -8,6 +8,7 @@ import Volumebyexchange  from '../marketInfo/volumeByExchange/volumeByExchange'
 import Registration from '../sign/register/register'
 import Login from '../sign/login/login'
 import ConfirmEmail from '../sign/confirmEmail/confirmEmail'
+import Funds from '../funds/funds'
 
 
 export default props => (
@@ -20,6 +21,7 @@ export default props => (
             <Route path='/register' component={Registration} />
             <Route path='/login' component={Login} />
             <Route path='/confirmemail' component={ConfirmEmail} />
+            <Route path='/funds' component={Funds} />
             <Redirect from='*' to='/' />
         </Switch>
     </div>

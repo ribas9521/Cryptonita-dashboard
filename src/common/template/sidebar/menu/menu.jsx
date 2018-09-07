@@ -9,10 +9,10 @@ export default props =>(
             icon="dashboard"
             desc="Dashboard"
             path = "/dashboard"/>
-        {/* <MenuItem color="red-500"
+         <MenuItem color="red-500"
             icon="exchange-vertical"
-            desc="Arbitrage"
-            path = "/arbitrage"/> */}
+            desc="Funds"
+            path = "/funds"/>
         <MenuTree desc="Market info" color="purple-500" icon="bar-chart">
             <MenuTreeItem path="/marketinfo/marketchages" desc="Market Changes"/>
             <MenuTreeItem path="/marketinfo/volumebyexchange" desc="Volume by exchange"/>

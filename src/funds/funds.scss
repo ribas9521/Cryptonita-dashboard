@@ -1,0 +1,56 @@
+.fund-logo{
+    width: 110px;
+}
+.fund-chart{
+    height: 225px!important;
+    //width: 100%;
+    margin-top: -50px;
+    margin-bottom: -50px;   
+}
+
+
+.variations{
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.fund-identity{
+    text-align: center;
+}
+
+.easy-pie-chart {
+  position: relative;
+
+  span {
+    position: absolute!important;
+    top: 50%!important;
+    left: 43%!important;
+    transform: translate(-50%, -50%)!important;
+    line-height: 0!important;
+  }
+}
+
+
+.followButton{
+    margin-top: 20px;
+    background: #3897f0;
+    border-color: #3897f0;
+    color: white;
+    text-align: center;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 26px;
+    outline: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: 100%;
+}
