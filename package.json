@@ -80,6 +80,7 @@
     "perfect-scrollbar": "^1.1.0",
     "popper.js": "^1.12.6",
     "query-string": "^6.1.0",
+    "react-environment-chart": "^0.1.7",
     "react-trend": "^1.2.4",
     "ts-loader": "^4.4.2",
     "typescript": "^2.9.2"

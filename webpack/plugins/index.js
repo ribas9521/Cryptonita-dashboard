@@ -9,7 +9,7 @@ plugins.push(
   ...(require('./internal')),
   require('./caseSensitivePlugin'),
   require('./extractPlugin'),
-  require('./hardSourceWebpackPlugin') 
+  
 );
 
 if (manifest.IS_DEVELOPMENT) {

@@ -1,5 +1,8 @@
 .fund-logo{
-    width: 110px;
+    width: 150px;
+}
+.fund-main{
+    max-height: 145px;
 }
 .fund-chart{
     height: 225px!important;
@@ -7,8 +10,6 @@
     margin-top: -50px;
     margin-bottom: -50px;   
 }
-
-
 .variations{
     padding: 3px;
     white-space: nowrap;
@@ -18,21 +19,26 @@
     text-align: center;
 }
 
-.easy-pie-chart {
-  position: relative;
+.fund-info{
+    .fund-title{
+            font-weight: 400;
+        }
+    
+    .fund-info-content{
+         
+        text-align: center;
+       
+        p{
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
 
-  span {
-    position: absolute!important;
-    top: 50%!important;
-    left: 43%!important;
-    transform: translate(-50%, -50%)!important;
-    line-height: 0!important;
-  }
+    }
 }
 
 
 .followButton{
-    margin-top: 20px;
+    margin-top: 5px;
     background: #3897f0;
     border-color: #3897f0;
     color: white;
@@ -53,4 +59,5 @@
     user-select: none;
     white-space: nowrap;
     width: 100%;
+
 }
