@@ -14,7 +14,7 @@ import Funds from '../funds/funds'
 export default props => (
     <div className='main-content bgc-grey-100'>
         <Switch>
-            <Route exact path='/' component={Dashboard} />
+            <Route exact path='/' component={Funds} />
             <Route path='/arbitrage' component={Arbitrage} />
             <Route path='/marketinfo/marketchages' component={MarketChanges} />
             <Route path='/marketinfo/volumebyexchange' component={Volumebyexchange} />

@@ -70,6 +70,7 @@
     "echarts-for-react": "^2.0.12-beta.0",
     "file-loader": "^1.1.5",
     "fullcalendar": "^3.6.2",
+    "history": "^4.7.2",
     "jquery": "^3.2.1",
     "jquery-sparkline": "^2.4.0",
     "jvectormap": "^2.0.4",
