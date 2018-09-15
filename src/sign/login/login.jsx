@@ -3,16 +3,16 @@ import { login } from '../signActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
+import { createHashHistory } from "history";
 
-
-import '../style.scss'
+import './loginStyle.scss'
 
 
 class Login extends Component {
 
-    constructor(props){
-
+    constructor(props) {
         super(props)
+        this.redirectTo= this.redirectTo.bind(this)
     }
 
     onSubmit(values) {
@@ -20,31 +20,44 @@ class Login extends Component {
         login(values)
     }
     componentDidUpdate() {
-        
+
+    }
+    redirectTo(path){
+        const history =createHashHistory()
+        history.push(path)
     }
 
     render() {
         const { handleSubmit } = this.props
         return (
-            <div className="container-fluid login-form">
-                <form onSubmit={handleSubmit(v => this.onSubmit(v))}>
-                    <div className="row">
-                        <div className="col-md-5">
-                            <div className="form-group login-form-group">                               
-                                <Field type="text" name="email" component="input" className="login-input form-control" placeholder="Email"/>
+            <div>
+                <div className="container-fluid d-block d-sm-none">
+                    <a href="#" onClick={(e) => {
+                        e.preventDefault(); this.redirectTo('login')
+                    }}>Login</a> <br/>
+                    <a href="#" onClick={(e)=>{
+                        e.preventDefault(); this.redirectTo('register')
+                    }}>Register</a>
+                </div>
+                <div className="container-fluid login-form login-content d-none d-sm-block">
+                    <form onSubmit={handleSubmit(v => this.onSubmit(v))}>
+                        <div className="row">
+                            <div className="col-md-5">
+                                <div className="form-group login-form-group">
+                                    <Field type="text" name="email" component="input" className="login-input form-control" placeholder="Email" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-md-5">
-                            <div className="form-group login-form-group">                                
-                                <Field type="password" name="password" component="input" className="login-input form-control" placeholder="Password" />
+                            <div className="col-md-5">
+                                <div className="form-group login-form-group">
+                                    <Field type="password" name="password" component="input" className="login-input form-control" placeholder="Password" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="peer">
-                                <button type="submit" className="btn btn-primary login-button">Login</button>
+                            <div className="col-md-2">
+                                <div className="peer">
+                                    <button type="submit" className="btn btn-primary login-button">Login</button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="form-group login-form-group check-box-form-group">
+                            {/* <div className="form-group login-form-group check-box-form-group">
                             <div className="peers ai-c jc-sb fxw-nw">
                                 <div className="peer">
                                     <div className="checkbox checkbox-circle checkbox-info peers ai-c">
@@ -55,9 +68,10 @@ class Login extends Component {
                                     </div>
                                 </div>
                             </div>
+                        </div> */}
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         )
     }

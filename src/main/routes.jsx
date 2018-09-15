@@ -5,8 +5,7 @@ import Dashboard from '../dashboard/dashboard'
 import Arbitrage from '../arbitrage/arbitrage'
 import MarketChanges  from '../marketInfo/marketChanges/marketChanges'
 import Volumebyexchange  from '../marketInfo/volumeByExchange/volumeByExchange'
-import Registration from '../sign/register/register'
-import Login from '../sign/login/login'
+import SignRouter from '../sign/signRouter'
 import ConfirmEmail from '../sign/confirmEmail/confirmEmail'
 import Funds from '../funds/funds'
 
@@ -18,8 +17,8 @@ export default props => (
             <Route path='/arbitrage' component={Arbitrage} />
             <Route path='/marketinfo/marketchages' component={MarketChanges} />
             <Route path='/marketinfo/volumebyexchange' component={Volumebyexchange} />
-            <Route path='/register' component={Registration} />
-            <Route path='/login' component={Login} />
+            <Route path='/register' component={SignRouter} />
+            <Route path='/login' component={SignRouter} />
             <Route path='/confirmemail' component={ConfirmEmail} />
             <Route path='/funds' component={Funds} />
             <Redirect from='*' to='/' />

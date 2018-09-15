@@ -14,39 +14,44 @@ class Header extends React.Component {
         super(props)
     }
     componentDidMount() {
-        // $('.sidebar-toggle').on('click', e => {
-        //     $('.app').toggleClass('is-collapsed');
-        //     e.preventDefault();
-        // });
-        // $('.search-toggle').on('click', e => {
-        //     $('.search-box, .search-input').toggleClass('active');
-        //     $('.search-input input').focus();
-        //     e.preventDefault();
-        // });
+        $('.sidebar-toggle').on('click', e => {
+            $('.app').toggleClass('is-collapsed');
+            e.preventDefault();
+        });
+        $('.search-toggle').on('click', e => {
+            $('.search-box, .search-input').toggleClass('active');
+            $('.search-input input').focus();
+            e.preventDefault();
+        });
     }
 
     render() {
-        const {userAuthenticated } = this.props
+        const { userAuthenticated } = this.props
         return (
             <div className="header navbar">
-                <div className="header-container">
-                    <div className="nav-left container-fluid">
-                        <div className="row">
-                            {/* <div className="col-md-3">
-                                <LoginStatus />
-                            </div> */}
-                            <div className="offset-md-1 col-md-4">
-                                <Search/>
-                            </div>
-                            <div className="col-md-4">
-                            {
-                                userAuthenticated ? <PerfilHeader/> : <Login />
-                            }                                
-                            </div>
-                        </div>
-                    </div>
+                <div className="header-container container-fluid">
+                    <ul className="nav-left col-md-12">                       
+                            <li className="col-md-1 col-sm-1 col-2" >
+                                <a id="sidebar-toggle" className="sidebar-toggle" href="javascript:void(0);">
+                                    <i className="ti-menu"></i>
+                                </a>
+                            </li>
+
+                            <li className="col-md-6 col-sm-8 col-7">
+                                <Search />
+                            </li>
+
+                            <li className="col-md-5 col-sm-3 col-3 login-content ">
+                                {
+                                    userAuthenticated ? <PerfilHeader /> : <Login />
+                                }
+                            </li>
+ 
+                    </ul>
+
                 </div>
             </div>
+
 
         )
     }
