@@ -14,7 +14,11 @@ class Login extends Component {
         super(props)
         this.redirectTo= this.redirectTo.bind(this)
     }
-
+    componentWillMount(){
+        const { login, userAuthenticated } = this.props
+        if(!userAuthenticated)
+            login()
+    }
     onSubmit(values) {
         const { login } = this.props
         login(values)

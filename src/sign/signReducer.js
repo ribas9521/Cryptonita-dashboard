@@ -1,8 +1,8 @@
-const userKey = '_mymoney_user'
 const INITIAL_STATE = {
     userCreated: false,
     emailVerified: false,
-    userAuthenticated: false
+    userAuthenticated: false,
+    identity: null
 }
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -12,6 +12,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, emailVerified: true }
         case 'USER_AUTHENTICATED':           
             return { ...state, userAuthenticated: action.payload }
+        case 'USER_IDENTITY_FETCHED':           
+            return { ...state, identity: action.payload }
         default:
             return state
     }

@@ -15,14 +15,15 @@ class PerfilHeader extends Component {
     }
 
     render() {
+        const { userName } = this.props
         return (
             <div className="dropdown perfil-header-container">
                 <a href="" className="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown" aria-expanded="false">
                     <div className="peer mR-10">
-                        <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="" />
+                        <img className="w-2r bdrs-50p" src="../assets/static/images/logo.png" alt="" />
                     </div>
                     <div className="peer">
-                        <span className="d-none d-sm-block fsz-sm c-grey-900">John Doe</span>
+                        <span className="d-none d-sm-block fsz-sm c-grey-900">{userName}</span>
                     </div>
                 </a>
                 <ul className="dropdown-menu fsz-sm perfil-menu">
@@ -45,8 +46,13 @@ class PerfilHeader extends Component {
         )
     }
 }
+const mapStateToProps = state => (
+    {
+        userName: state.sign.identity.username.name
+    }
+)
 
 const mapDispatchToProps = dispatch => {
     return (bindActionCreators({ logout }, dispatch))
 }
-export default connect(null, mapDispatchToProps)(PerfilHeader)
+export default connect(mapStateToProps, mapDispatchToProps)(PerfilHeader)

@@ -9,7 +9,7 @@ export default class SignRouter extends Component {
         const { history } = this.props
         return (
             <div className="peers ai-s fxw-nw h-100vh">
-                <div className="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style={{ backgroundImage: 'url("assets/static/images/space.jpg")' }}>
+                <div className="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv d-none d-sm-block" style={{ backgroundImage: 'url("assets/static/images/space.jpg")' }}>
                     <Particles params={particles} style={{position:'fixed'}}/>
                     <div className="pos-a centerXY">
                         <div className="bdrs-50p pos-r" style={{ width: "120px", height: "120px", backgroundColor: 'black' }}>
@@ -62,7 +62,7 @@ const particles={
                 "random": true,
                     "anim": {
                 "enable": true,
-                    "speed": 1,
+                    "speed": 0.5,
                         "opacity_min": 0,
                             "sync": false
             }

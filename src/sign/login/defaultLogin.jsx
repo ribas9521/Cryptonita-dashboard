@@ -20,6 +20,11 @@ class DefaultLogin extends Component{
         const history = createHashHistory()
         history.push(path)
     }
+    componentWillMount() {
+        const { login } = this.props
+        if (!userAuthenticated)
+            login()
+    }
 
     componentWillReceiveProps(nextProps){
         const { userAuthenticated} = nextProps
